@@ -7,7 +7,7 @@ import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.FileBuilders;
 import com.github.sujankumarmitra.service.PdfCreateOptions;
 import com.github.sujankumarmitra.service.PdfMerger;
-import com.github.sujankumarmitra.util.PdfFileUtils;
+import com.github.sujankumarmitra.util.FileUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -46,7 +46,7 @@ public class DefaultPdfMerger implements PdfMerger {
 
     private void assertValidOptions(PdfCreateOptions options) {
         Path path = options.getDestination();
-        if (!PdfFileUtils.isPdfFile(path)) {
+        if (!FileUtils.isPdfFile(path)) {
             throw new InvalidPdfFileException("Not a PDF file");
         }
 

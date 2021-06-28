@@ -5,7 +5,7 @@ import com.github.sujankumarmitra.exception.PdfException;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.PdfFileBuilder;
 import com.github.sujankumarmitra.model.impl.DefaultPdfFile;
-import com.github.sujankumarmitra.util.PdfFileUtils;
+import com.github.sujankumarmitra.util.FileUtils;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -41,7 +41,7 @@ public class DefaultPdfFileBuilder implements PdfFileBuilder {
     }
 
     private void checkForValidity(Path path) {
-        if(!PdfFileUtils.isPdfFile(path)) {
+        if(!FileUtils.isPdfFile(path)) {
             throw new InvalidPdfFileException("Not a PDF file");
         }
     }

@@ -3,7 +3,7 @@ package com.github.sujankumarmitra.util;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public abstract class PdfFileUtils {
+public abstract class FileUtils {
 
     public static boolean isPdfFile(Path path) {
         return Files.exists(path) &&
