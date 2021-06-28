@@ -1,19 +1,15 @@
 package com.github.sujankumarmitra.service.impl;
 
-import com.github.sujankumarmitra.exception.InvalidPdfFileException;
 import com.github.sujankumarmitra.exception.PdfException;
-import com.github.sujankumarmitra.exception.PdfFileAlreadyExistsException;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.FileBuilders;
 import com.github.sujankumarmitra.service.PdfCreateOptions;
 import com.github.sujankumarmitra.service.PdfMerger;
-import com.github.sujankumarmitra.util.FileUtils;
+import com.github.sujankumarmitra.util.PdfAssertions;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -22,7 +18,7 @@ public class DefaultPdfMerger implements PdfMerger {
 
     @Override
     public PdfFile mergePdfs(List<PdfFile> pdfFiles, PdfCreateOptions options) throws PdfException {
-        assertValidOptions(options);
+        PdfAssertions.assertLegalOptions(options);
 
         PDDocument mergedDocument = pdfFiles
                 .stream()
@@ -36,23 +32,12 @@ public class DefaultPdfMerger implements PdfMerger {
         try {
             mergedDocument.save(options.getDestination().toFile());
         } catch (Throwable th) {
-            throw new InvalidPdfFileException(th.getMessage());
+            throw new PdfException(th.getMessage());
         }
 
         return FileBuilders.newPdfFileBuilder()
                 .withLocation(options.getDestination())
                 .build();
-    }
-
-    private void assertValidOptions(PdfCreateOptions options) {
-        Path path = options.getDestination();
-        if (!FileUtils.isPdfFile(path)) {
-            throw new InvalidPdfFileException("Not a PDF file");
-        }
-
-        if (Files.exists(path) && !options.overwriteIfExists()) {
-            throw new PdfFileAlreadyExistsException();
-        }
     }
 
 
@@ -64,7 +49,7 @@ public class DefaultPdfMerger implements PdfMerger {
         try {
             return PDDocument.load(pdfFile.getLocation().toFile());
         } catch (Throwable th) {
-            throw new InvalidPdfFileException(th.getMessage());
+            throw new PdfException(th.getMessage());
         }
     }
 

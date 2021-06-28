@@ -1,7 +1,6 @@
 package com.github.sujankumarmitra.service.impl;
 
 import com.github.sujankumarmitra.model.PdfFile;
-import com.github.sujankumarmitra.model.impl.DefaultPdfFile;
 import com.github.sujankumarmitra.service.PdfCreateOptions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +22,10 @@ class DefaultPdfMergerTest {
     private static final String MERGED_DOC_NAME = "merged-doc.pdf";
 
     private DefaultPdfMerger pdfMerger;
+
+    private PdfFile pathToPdfFile(Path path) {
+        return () -> path;
+    }
 
     @BeforeEach
     void setUp() {
@@ -57,7 +59,7 @@ class DefaultPdfMergerTest {
     private List<PdfFile> getPdfFiles() {
         return Stream.of(DOC_1_NAME, DOC_2_NAME)
                 .map(this::nameToPath)
-                .map(DefaultPdfFile::new)
+                .map(this::pathToPdfFile)
                 .collect(Collectors.toList());
     }
 

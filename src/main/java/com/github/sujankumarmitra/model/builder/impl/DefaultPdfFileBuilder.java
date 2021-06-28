@@ -1,10 +1,7 @@
 package com.github.sujankumarmitra.model.builder.impl;
 
-import com.github.sujankumarmitra.exception.InvalidPdfFileException;
-import com.github.sujankumarmitra.exception.PdfException;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.PdfFileBuilder;
-import com.github.sujankumarmitra.model.impl.DefaultPdfFile;
 import com.github.sujankumarmitra.util.FileUtils;
 
 import java.io.File;
@@ -34,15 +31,29 @@ public class DefaultPdfFileBuilder implements PdfFileBuilder {
     }
 
     @Override
-    public PdfFile build() throws PdfException {
+    public PdfFile build() throws IllegalArgumentException {
         Path path = Paths.get(absolutePath);
         checkForValidity(path);
+
         return new DefaultPdfFile(path);
     }
 
     private void checkForValidity(Path path) {
         if(!FileUtils.isPdfFile(path)) {
-            throw new InvalidPdfFileException("Not a PDF file");
+            throw new IllegalArgumentException("Not a PDF file");
+        }
+    }
+
+    private static class DefaultPdfFile implements PdfFile {
+        private final Path path;
+
+        public DefaultPdfFile(Path path) {
+            this.path = path;
+        }
+
+        @Override
+        public Path getLocation() {
+            return path;
         }
     }
 }
