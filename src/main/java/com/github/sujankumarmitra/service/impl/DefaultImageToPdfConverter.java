@@ -1,6 +1,6 @@
 package com.github.sujankumarmitra.service.impl;
 
-import com.github.sujankumarmitra.exception.PdfException;
+import com.github.sujankumarmitra.exception.PdfCreationException;
 import com.github.sujankumarmitra.model.ImageFile;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.FileBuilders;
@@ -16,7 +16,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 public class DefaultImageToPdfConverter implements ImageToPdfConverter {
 
     @Override
-    public PdfFile convert(ImageFile file, PdfCreateOptions options) throws PdfException {
+    public PdfFile convert(ImageFile file, PdfCreateOptions options) throws PdfCreationException {
         PdfAssertions.assertLegalOptions(options);
 
         PDDocument doc = new PDDocument();
@@ -25,7 +25,7 @@ public class DefaultImageToPdfConverter implements ImageToPdfConverter {
         try {
             image = PDImageXObject.createFromFileByContent(file.getLocation().toFile(), doc);
         } catch (Throwable th) {
-            throw new PdfException(th);
+            throw new PdfCreationException(th);
         }
         PDRectangle pageSize = PDRectangle.A4;
 
@@ -44,13 +44,13 @@ public class DefaultImageToPdfConverter implements ImageToPdfConverter {
         try (PDPageContentStream contents = new PDPageContentStream(doc, page)) {
             contents.drawImage(image, x, y, scaledWidth, scaledHeight);
         } catch (Throwable th) {
-            throw new PdfException(th);
+            throw new PdfCreationException(th);
         }
 
         try {
             doc.save(options.getDestination().toFile());
         } catch (Throwable th) {
-            throw new PdfException(th);
+            throw new PdfCreationException(th);
         }
 
         return FileBuilders.newPdfFileBuilder()

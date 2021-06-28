@@ -1,6 +1,6 @@
 package com.github.sujankumarmitra.service.impl;
 
-import com.github.sujankumarmitra.exception.PdfException;
+import com.github.sujankumarmitra.exception.PdfCreationException;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.model.builder.FileBuilders;
 import com.github.sujankumarmitra.service.PdfCreateOptions;
@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 public class DefaultPdfMerger implements PdfMerger {
 
     @Override
-    public PdfFile mergePdfs(List<PdfFile> pdfFiles, PdfCreateOptions options) throws PdfException {
+    public PdfFile mergePdfs(List<PdfFile> pdfFiles, PdfCreateOptions options) throws PdfCreationException {
         PdfAssertions.assertLegalOptions(options);
 
         PDDocument mergedDocument = pdfFiles
@@ -32,7 +32,7 @@ public class DefaultPdfMerger implements PdfMerger {
         try {
             mergedDocument.save(options.getDestination().toFile());
         } catch (Throwable th) {
-            throw new PdfException(th.getMessage());
+            throw new PdfCreationException(th.getMessage());
         }
 
         return FileBuilders.newPdfFileBuilder()
@@ -49,7 +49,7 @@ public class DefaultPdfMerger implements PdfMerger {
         try {
             return PDDocument.load(pdfFile.getLocation().toFile());
         } catch (Throwable th) {
-            throw new PdfException(th.getMessage());
+            throw new PdfCreationException(th.getMessage());
         }
     }
 

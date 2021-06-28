@@ -38,7 +38,7 @@ public class DefaultImageFileBuilder implements ImageFileBuilder {
 
     private void checkValidity(Path path) {
         if(!FileUtils.isImageFile(path))
-            throw new IllegalArgumentException("Not a image file");
+            throw new IllegalArgumentException("Not an image file");
     }
 
     private static class DefaultImageFile implements ImageFile {
