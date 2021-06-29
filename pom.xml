@@ -94,7 +94,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>com.github.sujankumarmitra.launcher.CommandLineLauncher</mainClass>
+                <mainClass>com.github.sujankumarmitra.pdfforj.launcher.CommandLineLauncher</mainClass>
               </manifest>
             </archive>
             <descriptorRefs>
