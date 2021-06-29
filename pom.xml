@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.sujankumarmitra</groupId>
-  <artifactId>PdfForJ</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>pdf-for-j</artifactId>
+  <version>1.0.0-RELEASE</version>
 
   <name>PdfForJ</name>
   <!-- FIXME change it to the project's website -->
@@ -91,24 +91,22 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>com.github.sujankumarmitra.launcher.CommandLineLauncher</mainClass>
+              </manifest>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+          </configuration>
           <executions>
             <execution>
               <phase>package</phase>
               <goals>
                 <goal>single</goal>
               </goals>
-              <configuration>
-                <archive>
-                  <manifest>
-                    <mainClass>
-                      com.github.sujankumarmitra.launcher.CommandLineLauncher
-                    </mainClass>
-                  </manifest>
-                </archive>
-                <descriptorRefs>
-                  <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-              </configuration>
             </execution>
           </executions>
         </plugin>
