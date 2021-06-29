@@ -49,7 +49,18 @@ public class CommandLineLauncher {
                     .convertAndMerge(imageFiles, createOptions);
 
             System.out.println("PDF saved in " + mergedPdf.getLocation());
-        } else {
+        } else if(parseResult.hasOption("r")) {
+            String destination = args[1];
+            PdfFile pdfFile = FileBuilders.newPdfFileBuilder()
+                    .withLocation(destination)
+                    .build();
+            ServiceFactory.pdfServiceFacade()
+                    .reversePages(pdfFile);
+
+            System.out.println("PDF pages are reversed");
+        }
+
+        else {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("java -jar PdfForJ.jar", options);
         }

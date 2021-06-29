@@ -10,6 +10,7 @@ public class OptionsFactory {
         options.addOption(getMergeOption());
         options.addOption(getImageConvertOption());
         options.addOption(getConvertAndMergeImageOption());
+        options.addOption(getReversePagesOption());
 
         return options;
     }
@@ -40,5 +41,14 @@ public class OptionsFactory {
                .numberOfArgs(1)
                .build();
 
+    }
+
+    private static Option getReversePagesOption() {
+        return Option.builder("r")
+                .longOpt("reverse")
+                .desc("Reverse the order of page in PDF")
+                .numberOfArgs(1)
+                .argName("source")
+                .build();
     }
 }
