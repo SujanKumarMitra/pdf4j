@@ -13,6 +13,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import java.nio.file.Files;
+
 public class DefaultImageToPdfConverter implements ImageToPdfConverter {
 
     @Override
@@ -48,7 +50,7 @@ public class DefaultImageToPdfConverter implements ImageToPdfConverter {
         }
 
         try {
-            doc.save(options.getDestination().toFile());
+            doc.save(Files.newOutputStream(options.getDestination()));
         } catch (Throwable th) {
             throw new PdfCreationException(th);
         }

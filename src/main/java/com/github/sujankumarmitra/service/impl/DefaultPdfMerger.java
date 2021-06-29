@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 
+import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -30,7 +31,7 @@ public class DefaultPdfMerger implements PdfMerger {
                         (pdfDoc, pdfPage) -> pdfDoc.addPage(pdfPage),
                         this::mergePDDDocs);
         try {
-            mergedDocument.save(options.getDestination().toFile());
+            mergedDocument.save(Files.newOutputStream(options.getDestination()));
         } catch (Throwable th) {
             throw new PdfCreationException(th.getMessage());
         }
@@ -47,7 +48,7 @@ public class DefaultPdfMerger implements PdfMerger {
 
     private PDDocument fileToPDDoc(PdfFile pdfFile) {
         try {
-            return PDDocument.load(pdfFile.getLocation().toFile());
+            return PDDocument.load(Files.newInputStream(pdfFile.getLocation()));
         } catch (Throwable th) {
             throw new PdfCreationException(th.getMessage());
         }
