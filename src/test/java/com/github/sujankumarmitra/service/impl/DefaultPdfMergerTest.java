@@ -1,11 +1,16 @@
 package com.github.sujankumarmitra.service.impl;
 
+import com.github.sujankumarmitra.exception.PdfCreationException;
 import com.github.sujankumarmitra.model.PdfFile;
 import com.github.sujankumarmitra.service.PdfCreateOptions;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.ClassLoader.getSystemClassLoader;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class DefaultPdfMergerTest {
 
@@ -22,6 +28,22 @@ class DefaultPdfMergerTest {
     private static final String MERGED_DOC_NAME = "merged-doc.pdf";
 
     private DefaultPdfMerger pdfMerger;
+
+    private PDDocument toPDDoc(InputStream input) {
+        try {
+            return PDDocument.load(input);
+        } catch (IOException e) {
+            throw new PdfCreationException(e);
+        }
+    }
+
+    private InputStream toInputStream(Path path) {
+        try {
+            return Files.newInputStream(path);
+        } catch (IOException e) {
+            throw new PdfCreationException(e);
+        }
+    }
 
     private PdfFile pathToPdfFile(Path path) {
         return () -> path;
@@ -35,6 +57,7 @@ class DefaultPdfMergerTest {
     @Test
     void givenTwoPdfs_whenMerged_shouldMerge() {
         List<PdfFile> pdfFiles = getPdfFiles();
+        int pageCountSum = getPageCountSum(pdfFiles);
         PdfCreateOptions options = getPdfCreateOptions();
 
         PdfFile pdfFile = pdfMerger.mergePdfs(pdfFiles, options);
@@ -42,11 +65,26 @@ class DefaultPdfMergerTest {
         Assertions.assertNotNull(pdfFile);
 
         Path path = pdfFile.getLocation();
+        System.out.println(path);
 
         Assertions.assertNotNull(path);
         Assertions.assertTrue(Files.exists(path));
 
-        System.out.println(path);
+        try {
+            Assertions.assertEquals(pageCountSum,
+                    PDDocument.load(Files.newInputStream(path)).getNumberOfPages());
+        } catch (IOException e) {
+            fail(e);
+        }
+    }
+
+    private int getPageCountSum(List<PdfFile> pdfFiles) {
+        return pdfFiles.stream()
+                .map(PdfFile::getLocation)
+                .map(this::toInputStream)
+                .map(this::toPDDoc)
+                .mapToInt(PDDocument::getNumberOfPages)
+                .sum();
     }
 
     private DefaultPdfCreateOptions getPdfCreateOptions() {

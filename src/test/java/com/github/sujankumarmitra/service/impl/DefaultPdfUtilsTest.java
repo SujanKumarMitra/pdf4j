@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultPdfUtilsTest {
 
     private static final String PDF_NAME = "multi-page.pdf";
-    private static final String PDF_REV_NAME = "multi-page-reverse.pdf";
 
     private DefaultPdfUtils pdfUtils;
 

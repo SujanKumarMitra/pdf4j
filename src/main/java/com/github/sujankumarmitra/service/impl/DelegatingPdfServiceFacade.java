@@ -1,36 +1,20 @@
 package com.github.sujankumarmitra.service.impl;
 
-import com.github.sujankumarmitra.exception.PdfCreationException;
-import com.github.sujankumarmitra.model.ImageFile;
-import com.github.sujankumarmitra.model.PdfFile;
-import com.github.sujankumarmitra.service.*;
+import com.github.sujankumarmitra.service.ImageToPdfConverter;
+import com.github.sujankumarmitra.service.PdfMerger;
+import com.github.sujankumarmitra.service.PdfServiceFacade;
+import com.github.sujankumarmitra.service.PdfUtils;
+import lombok.AllArgsConstructor;
+import lombok.experimental.Delegate;
 
-import java.util.List;
-
+@AllArgsConstructor
 public class DelegatingPdfServiceFacade implements PdfServiceFacade {
 
+    @Delegate
     private final ImageToPdfConverter imageToPdfConverter;
+    @Delegate
     private final PdfMerger pdfMerger;
+    @Delegate
     private final PdfUtils pdfUtils;
 
-    public DelegatingPdfServiceFacade(ImageToPdfConverter imageToPdfConverter, PdfMerger pdfMerger, PdfUtils pdfUtils) {
-        this.imageToPdfConverter = imageToPdfConverter;
-        this.pdfMerger = pdfMerger;
-        this.pdfUtils = pdfUtils;
-    }
-
-    @Override
-    public PdfFile convert(ImageFile file, PdfCreateOptions options) throws PdfCreationException {
-        return imageToPdfConverter.convert(file, options);
-    }
-
-    @Override
-    public PdfFile mergePdfs(List<PdfFile> pdfFiles, PdfCreateOptions options) throws PdfCreationException {
-        return pdfMerger.mergePdfs(pdfFiles, options);
-    }
-
-    @Override
-    public void reversePages(PdfFile file) throws PdfCreationException {
-        pdfUtils.reversePages(file);
-    }
 }

@@ -32,9 +32,11 @@ public class DefaultPdfMerger implements PdfMerger {
                         this::mergePDDDocs);
         try {
             mergedDocument.save(Files.newOutputStream(options.getDestination()));
+            mergedDocument.close();
         } catch (Throwable th) {
             throw new PdfCreationException(th.getMessage());
         }
+
 
         return FileBuilders.newPdfFileBuilder()
                 .withLocation(options.getDestination())

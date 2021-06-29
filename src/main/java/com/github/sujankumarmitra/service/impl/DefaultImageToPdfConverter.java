@@ -14,6 +14,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.nio.file.Files;
+import java.util.List;
 
 public class DefaultImageToPdfConverter implements ImageToPdfConverter {
 
@@ -22,6 +23,40 @@ public class DefaultImageToPdfConverter implements ImageToPdfConverter {
         PdfAssertions.assertLegalOptions(options);
 
         PDDocument doc = new PDDocument();
+        appendImageToDoc(doc, file);
+
+        try {
+            doc.save(Files.newOutputStream(options.getDestination()));
+            doc.close();
+        } catch (Throwable th) {
+            throw new PdfCreationException(th);
+        }
+
+        return FileBuilders.newPdfFileBuilder()
+                .withLocation(options.getDestination())
+                .build();
+    }
+
+    @Override
+    public PdfFile convertAndMerge(List<ImageFile> files, PdfCreateOptions options) throws PdfCreationException {
+        PDDocument document = files.stream()
+                .sequential()
+                .collect(PDDocument::new,
+                        this::appendImageToDoc,
+                        this::mergeDocs);
+        try {
+            document.save(Files.newOutputStream(options.getDestination()));
+            document.close();
+        } catch (Throwable th) {
+            throw new PdfCreationException(th);
+        }
+
+        return FileBuilders.newPdfFileBuilder()
+                .withLocation(options.getDestination())
+                .build();
+    }
+
+    private void appendImageToDoc(PDDocument doc, ImageFile file) {
         PDImageXObject image;
 
         try {
@@ -48,15 +83,9 @@ public class DefaultImageToPdfConverter implements ImageToPdfConverter {
         } catch (Throwable th) {
             throw new PdfCreationException(th);
         }
+    }
 
-        try {
-            doc.save(Files.newOutputStream(options.getDestination()));
-        } catch (Throwable th) {
-            throw new PdfCreationException(th);
-        }
-
-        return FileBuilders.newPdfFileBuilder()
-                .withLocation(options.getDestination())
-                .build();
+    private void mergeDocs(PDDocument doc1, PDDocument doc2) {
+        doc2.getPages().forEach(doc1::addPage);
     }
 }
