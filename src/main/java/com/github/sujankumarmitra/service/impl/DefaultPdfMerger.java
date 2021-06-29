@@ -28,8 +28,8 @@ public class DefaultPdfMerger implements PdfMerger {
                 .map(PDDocument::getPages)
                 .flatMap(this::pageTreeToPageStream)
                 .collect(PDDocument::new,
-                        (pdfDoc, pdfPage) -> pdfDoc.addPage(pdfPage),
-                        this::mergePDDDocs);
+                        PDDocument::addPage,
+                        this::mergePDDocs);
         try {
             mergedDocument.save(Files.newOutputStream(options.getDestination()));
             mergedDocument.close();
@@ -56,7 +56,7 @@ public class DefaultPdfMerger implements PdfMerger {
         }
     }
 
-    private void mergePDDDocs(PDDocument doc1, PDDocument doc2) {
+    private void mergePDDocs(PDDocument doc1, PDDocument doc2) {
         doc2.getPages().forEach(doc1::addPage);
     }
 }

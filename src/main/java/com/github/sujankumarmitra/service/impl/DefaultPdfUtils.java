@@ -44,6 +44,7 @@ public class DefaultPdfUtils implements PdfUtils {
 
         try {
             pdf.save(Files.newOutputStream(file.getLocation()));
+            pdf.close();
         } catch (Throwable th) {
             throw new PdfCreationException(th);
         }
