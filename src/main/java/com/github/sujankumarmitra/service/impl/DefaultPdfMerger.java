@@ -25,7 +25,7 @@ public class DefaultPdfMerger implements PdfMerger {
                 .stream()
                 .sequential()
                 .map(this::fileToPDDoc)
-                .map(pdfDoc -> pdfDoc.getPages())
+                .map(PDDocument::getPages)
                 .flatMap(this::pageTreeToPageStream)
                 .collect(PDDocument::new,
                         (pdfDoc, pdfPage) -> pdfDoc.addPage(pdfPage),
