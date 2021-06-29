@@ -9,6 +9,7 @@ public class OptionsFactory {
 
         options.addOption(getMergeOption());
         options.addOption(getImageConvertOption());
+        options.addOption(getConvertAndMergeImageOption());
 
         return options;
     }
@@ -17,7 +18,7 @@ public class OptionsFactory {
         return Option.builder("c")
                 .longOpt("convert")
                 .numberOfArgs(2)
-                .argName("imageFile destination")
+                .argName("source destination")
                 .desc("Convert an image to PDF")
                 .build();
     }
