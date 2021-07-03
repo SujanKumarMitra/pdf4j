@@ -8,7 +8,7 @@
   <artifactId>pdf4j</artifactId>
   <version>1.0.0-RELEASE</version>
 
-  <name>Pdf4J</name>
+  <name>Pdf4j</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -94,7 +94,7 @@
           <configuration>
             <archive>
               <manifest>
-                <mainClass>com.github.sujankumarmitra.pdfforj.launcher.CommandLineLauncher</mainClass>
+                <mainClass>com.github.sujankumarmitra.pdf4j.launcher.CommandLineLauncher</mainClass>
               </manifest>
             </archive>
             <descriptorRefs>

@@ -63,7 +63,7 @@ public class CommandLineLauncher {
 
         else {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar PdfForJ.jar", options);
+            formatter.printHelp("java -jar Pdf4j.jar", options);
         }
 
     }
