@@ -1,4 +1,4 @@
-# pdf-for-j
+# pdf4j
 Some PDF related utility functions implemented in Java using Apache PDFBox
 1. Merge PDF files
 1. Convert an Image to a PDF file
