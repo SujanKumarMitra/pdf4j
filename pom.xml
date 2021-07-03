@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.sujankumarmitra</groupId>
-  <artifactId>pdf-for-j</artifactId>
+  <artifactId>pdf4j</artifactId>
   <version>1.0.0-RELEASE</version>
 
-  <name>PdfForJ</name>
+  <name>Pdf4J</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
