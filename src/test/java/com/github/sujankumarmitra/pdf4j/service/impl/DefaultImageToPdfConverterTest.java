@@ -1,17 +1,13 @@
 package com.github.sujankumarmitra.pdf4j.service.impl;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.github.sujankumarmitra.pdf4j.model.ImageFile;
 import com.github.sujankumarmitra.pdf4j.model.PdfFile;
 import com.github.sujankumarmitra.pdf4j.model.builder.FileBuilders;
 import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
-import com.github.sujankumarmitra.pdf4j.service.impl.DefaultImageToPdfConverter;
-import com.github.sujankumarmitra.pdf4j.service.impl.DefaultPdfCreateOptions;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

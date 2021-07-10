@@ -1,17 +1,13 @@
 package com.github.sujankumarmitra.pdf4j.service.impl;
 
+import com.github.sujankumarmitra.pdf4j.exception.PdfCreationException;
+import com.github.sujankumarmitra.pdf4j.model.PdfFile;
+import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.github.sujankumarmitra.pdf4j.exception.PdfCreationException;
-import com.github.sujankumarmitra.pdf4j.model.PdfFile;
-import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
-import com.github.sujankumarmitra.pdf4j.service.impl.DefaultPdfCreateOptions;
-import com.github.sujankumarmitra.pdf4j.service.impl.DefaultPdfMerger;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
