@@ -19,7 +19,7 @@ public class OptionsFactory {
         return Option.builder("c")
                 .longOpt("convert")
                 .numberOfArgs(2)
-                .argName("source destination")
+                .argName("sourcePath destinationPath")
                 .desc("Convert an image to PDF")
                 .build();
     }
@@ -28,7 +28,7 @@ public class OptionsFactory {
         return Option.builder("m")
                 .longOpt("merge")
                 .numberOfArgs(1)
-                .argName("destination files...")
+                .argName("destinationPath filePaths...")
                 .desc("Merge PDFs into a single PDF")
                 .build();
     }
@@ -37,7 +37,7 @@ public class OptionsFactory {
         return Option.builder("cm")
                .longOpt("convert-and-merge")
                .desc("Convert images to PDF and merge them")
-               .argName("destination files..")
+               .argName("destinationPath filePath...")
                .numberOfArgs(1)
                .build();
 
@@ -48,7 +48,7 @@ public class OptionsFactory {
                 .longOpt("reverse")
                 .desc("Reverse the order of page in PDF")
                 .numberOfArgs(1)
-                .argName("source")
+                .argName("sourcePath")
                 .build();
     }
 }
