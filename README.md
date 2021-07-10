@@ -7,5 +7,5 @@ Some PDF related utility functions implemented in Java using Apache PDFBox
 
 ## To Use
 
-1. `mvn clean compile test assembly:single`
-2. `java -jar pdf-for-j-1.0.0-RELEASE-jar-with-dependencies.jar`
+1. `./build.sh`
+2. `java -jar pdf4j-1.0.0-RELEASE-jar-with-dependencies.jar.jar`
