@@ -37,7 +37,7 @@ public class OptionsFactory {
         return Option.builder("cm")
                .longOpt("convert-and-merge")
                .desc("Convert images to PDF and merge them")
-               .argName("destinationPath filePath...")
+               .argName("destinationPath filePaths...")
                .numberOfArgs(1)
                .build();
 
