@@ -5,6 +5,7 @@ import com.github.sujankumarmitra.pdf4j.model.PdfFile;
 import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
 
 import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +65,7 @@ class DefaultPdfMergerTest {
 
         try {
             Assertions.assertEquals(pageCountSum,
-                    Loader.loadPDF(path.toFile()).getNumberOfPages());
+                    Loader.loadPDF(new RandomAccessReadBufferedFile(path)).getNumberOfPages());
         } catch (IOException e) {
             fail(e);
         }

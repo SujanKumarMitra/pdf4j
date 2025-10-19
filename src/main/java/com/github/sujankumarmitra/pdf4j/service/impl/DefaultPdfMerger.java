@@ -1,6 +1,7 @@
 package com.github.sujankumarmitra.pdf4j.service.impl;
 
 import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -52,7 +53,7 @@ public class DefaultPdfMerger implements PdfMerger {
 
     private PDDocument fileToPDDoc(PdfFile pdfFile) {
         try {
-            return Loader.loadPDF(pdfFile.getLocation().toFile());
+            return Loader.loadPDF(new RandomAccessReadBufferedFile(pdfFile.getLocation()));
         } catch (Throwable th) {
             throw new PdfCreationException(th.getMessage());
         }

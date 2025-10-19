@@ -6,6 +6,7 @@ import com.github.sujankumarmitra.pdf4j.model.builder.FileBuilders;
 import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
 
 import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class DefaultImageToPdfConverterTest {
         assertTrue(Files.exists(location));
 
         Assertions.assertEquals(1,
-                Loader.loadPDF(location.toFile()).getNumberOfPages());
+                Loader.loadPDF(new RandomAccessReadBufferedFile(location)).getNumberOfPages());
 
         System.out.println(location);
     }

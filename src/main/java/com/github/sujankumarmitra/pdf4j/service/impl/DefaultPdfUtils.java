@@ -1,6 +1,7 @@
 package com.github.sujankumarmitra.pdf4j.service.impl;
 
 import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -20,7 +21,7 @@ public class DefaultPdfUtils implements PdfUtils {
     public void reversePages(PdfFile file) throws PdfCreationException {
         PDDocument pdf;
         try {
-            pdf = Loader.loadPDF(file.getLocation().toFile());
+            pdf = Loader.loadPDF(new RandomAccessReadBufferedFile(file.getLocation()));
         } catch (IOException e) {
             throw new PdfCreationException(e);
         }
