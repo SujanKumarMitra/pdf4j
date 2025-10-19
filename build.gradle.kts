@@ -4,7 +4,6 @@ plugins {
 }
 
 group = "com.github.sujankumarmitra"
-version = "1.0.0-RELEASE"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -38,6 +37,7 @@ tasks.test {
 }
 
 tasks.register<Jar>("standaloneJar") {
+    archiveBaseName.set("pdf4j")
     archiveClassifier.set("standalone")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     
