@@ -7,22 +7,29 @@ group = "com.github.sujankumarmitra"
 version = "1.0.0-RELEASE"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
     mavenCentral()
 }
 
+// Dependency versions
+val lombokVersion = "1.18.42"
+val junitVersion = "5.13.4"
+val pdfboxVersion = "2.0.35"
+val commonsCliVersion = "1.10.0"
+val mainClassName = "com.github.sujankumarmitra.pdf4j.launcher.CommandLineLauncher"
+
 dependencies {
-    implementation("org.apache.pdfbox:pdfbox:2.0.12")
-    implementation("commons-cli:commons-cli:1.4")
+    implementation("org.apache.pdfbox:pdfbox:$pdfboxVersion")
+    implementation("commons-cli:commons-cli:$commonsCliVersion")
     
-    compileOnly("org.projectlombok:lombok:1.18.16")
-    annotationProcessor("org.projectlombok:lombok:1.18.16")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
@@ -35,7 +42,7 @@ tasks.register<Jar>("standaloneJar") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     
     manifest {
-        attributes["Main-Class"] = "com.github.sujankumarmitra.pdf4j.launcher.CommandLineLauncher"
+        attributes["Main-Class"] = mainClassName
     }
     
     from(sourceSets.main.get().output)
@@ -47,5 +54,5 @@ tasks.register<Jar>("standaloneJar") {
 }
 
 application {
-    mainClass.set("com.github.sujankumarmitra.pdf4j.launcher.CommandLineLauncher")
+    mainClass.set(mainClassName)
 }
