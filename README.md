@@ -5,8 +5,12 @@ Some PDF related utility functions implemented in Java using Apache PDFBox
 1. Convert Images and merge them into single PDF
 1. Reverse pages in PDF
 
+## Requirements
+- Java 11 or higher
+- Gradle (or use included wrapper)
+
 ## To Use
 
 1. `./build.sh`
-2. `cd target/`
-3. `java -jar pdf4j-1.0.0-RELEASE-jar-with-dependencies.jar`
+2. `cd build/libs/`
+3. `java -jar pdf4j-1.0.0-RELEASE-standalone.jar`

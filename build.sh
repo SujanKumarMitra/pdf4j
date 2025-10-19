@@ -1,2 +1,2 @@
 #!/bin/bash
-mvn clean compile test assembly:single
+./gradlew clean build test standaloneJar
