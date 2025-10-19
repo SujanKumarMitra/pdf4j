@@ -11,6 +11,7 @@ public class OptionsFactory {
         options.addOption(getImageConvertOption());
         options.addOption(getConvertAndMergeImageOption());
         options.addOption(getReversePagesOption());
+        options.addOption(getSplitOption());
 
         return options;
     }
@@ -49,6 +50,15 @@ public class OptionsFactory {
                 .desc("Reverse the order of page in PDF")
                 .numberOfArgs(1)
                 .argName("sourcePath")
+                .get();
+    }
+
+    private static Option getSplitOption() {
+        return Option.builder("s")
+                .longOpt("split")
+                .desc("Split PDF into individual single-page PDFs")
+                .numberOfArgs(2)
+                .argName("sourcePath outputDirectory")
                 .get();
     }
 }

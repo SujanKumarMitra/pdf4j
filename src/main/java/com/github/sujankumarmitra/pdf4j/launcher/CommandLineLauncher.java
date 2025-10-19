@@ -63,6 +63,19 @@ public class CommandLineLauncher {
                     .reversePages(pdfFile);
 
             System.out.println("PDF pages are reversed");
+        } else if(parseResult.hasOption("s")) {
+            String inputFile = args[1];
+            String outputDirectory = args[2];
+            
+            PdfFile pdfFile = FileBuilders.newPdfFileBuilder()
+                    .withLocation(inputFile)
+                    .build();
+            PdfCreateOptions createOptions = getCreateOptions(outputDirectory);
+            
+            ServiceFactory.pdfServiceFacade()
+                    .splitPdf(pdfFile, createOptions);
+                    
+            System.out.println("PDF split into individual pages in " + outputDirectory);
         }
 
         else {
