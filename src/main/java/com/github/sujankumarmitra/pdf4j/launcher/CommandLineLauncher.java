@@ -1,7 +1,5 @@
 package com.github.sujankumarmitra.pdf4j.launcher;
 
-import org.apache.commons.cli.*;
-
 import com.github.sujankumarmitra.pdf4j.model.ImageFile;
 import com.github.sujankumarmitra.pdf4j.model.PdfFile;
 import com.github.sujankumarmitra.pdf4j.model.builder.FileBuilders;
@@ -13,8 +11,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.help.HelpFormatter;
+
 public class CommandLineLauncher {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws Exception {
         CommandLineParser parser = new DefaultParser();
         Options options = OptionsFactory.getOptions();
         CommandLine parseResult = parser.parse(options, args);
@@ -62,8 +66,8 @@ public class CommandLineLauncher {
         }
 
         else {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar Pdf4j.jar", options);
+            HelpFormatter formatter = HelpFormatter.builder().get();
+            formatter.printOptions(options);
         }
 
     }

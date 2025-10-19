@@ -4,7 +4,8 @@ import com.github.sujankumarmitra.pdf4j.model.ImageFile;
 import com.github.sujankumarmitra.pdf4j.model.PdfFile;
 import com.github.sujankumarmitra.pdf4j.model.builder.FileBuilders;
 import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
-import org.apache.pdfbox.pdmodel.PDDocument;
+
+import org.apache.pdfbox.Loader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultImageToPdfConverterTest {
     private static String IMAGE_NAME = "image.png";
-    private static String PDF_NAME = "pdf-of-image.png";
     private static String IMAGES_DIR_NAME = "images";
 
     private DefaultImageToPdfConverter converter;
@@ -47,7 +47,7 @@ class DefaultImageToPdfConverterTest {
         assertTrue(Files.exists(location));
 
         Assertions.assertEquals(1,
-                PDDocument.load(Files.newInputStream(location)).getNumberOfPages());
+                Loader.loadPDF(location.toFile()).getNumberOfPages());
 
         System.out.println(location);
     }
@@ -67,7 +67,7 @@ class DefaultImageToPdfConverterTest {
         assertNotNull(location);
 
         assertEquals(expectedPageCount,
-                PDDocument.load(Files.newInputStream(location)).getNumberOfPages());
+                Loader.loadPDF(location.toFile()).getNumberOfPages());
 
         System.out.println(location);
     }

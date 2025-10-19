@@ -18,7 +18,7 @@ repositories {
 // Dependency versions
 val lombokVersion = "1.18.42"
 val junitVersion = "5.13.4"
-val pdfboxVersion = "2.0.35"
+val pdfboxVersion = "3.0.6"
 val commonsCliVersion = "1.10.0"
 val mainClassName = "com.github.sujankumarmitra.pdf4j.launcher.CommandLineLauncher"
 

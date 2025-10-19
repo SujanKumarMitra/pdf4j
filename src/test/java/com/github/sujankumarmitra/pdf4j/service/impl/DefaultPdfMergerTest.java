@@ -3,13 +3,14 @@ package com.github.sujankumarmitra.pdf4j.service.impl;
 import com.github.sujankumarmitra.pdf4j.exception.PdfCreationException;
 import com.github.sujankumarmitra.pdf4j.model.PdfFile;
 import com.github.sujankumarmitra.pdf4j.service.PdfCreateOptions;
+
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,17 +29,9 @@ class DefaultPdfMergerTest {
 
     private DefaultPdfMerger pdfMerger;
 
-    private PDDocument toPDDoc(InputStream input) {
+    private PDDocument toPDDoc(Path pdfPath) {
         try {
-            return PDDocument.load(input);
-        } catch (IOException e) {
-            throw new PdfCreationException(e);
-        }
-    }
-
-    private InputStream toInputStream(Path path) {
-        try {
-            return Files.newInputStream(path);
+            return Loader.loadPDF(pdfPath.toFile());
         } catch (IOException e) {
             throw new PdfCreationException(e);
         }
@@ -71,7 +64,7 @@ class DefaultPdfMergerTest {
 
         try {
             Assertions.assertEquals(pageCountSum,
-                    PDDocument.load(Files.newInputStream(path)).getNumberOfPages());
+                    Loader.loadPDF(path.toFile()).getNumberOfPages());
         } catch (IOException e) {
             fail(e);
         }
@@ -80,7 +73,6 @@ class DefaultPdfMergerTest {
     private int getPageCountSum(List<PdfFile> pdfFiles) {
         return pdfFiles.stream()
                 .map(PdfFile::getLocation)
-                .map(this::toInputStream)
                 .map(this::toPDDoc)
                 .mapToInt(PDDocument::getNumberOfPages)
                 .sum();

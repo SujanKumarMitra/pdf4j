@@ -1,5 +1,6 @@
 package com.github.sujankumarmitra.pdf4j.service.impl;
 
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
@@ -51,7 +52,7 @@ public class DefaultPdfMerger implements PdfMerger {
 
     private PDDocument fileToPDDoc(PdfFile pdfFile) {
         try {
-            return PDDocument.load(Files.newInputStream(pdfFile.getLocation()));
+            return Loader.loadPDF(pdfFile.getLocation().toFile());
         } catch (Throwable th) {
             throw new PdfCreationException(th.getMessage());
         }
