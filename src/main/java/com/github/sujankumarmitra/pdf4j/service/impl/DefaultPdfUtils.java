@@ -11,6 +11,9 @@ import com.github.sujankumarmitra.pdf4j.service.PdfUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 public class DefaultPdfUtils implements PdfUtils {
     @Override
@@ -45,8 +48,10 @@ public class DefaultPdfUtils implements PdfUtils {
         }
 
         try {
-            pdf.save(Files.newOutputStream(file.getLocation()));
+            Path tempFile = Files.createTempFile("pdfbox", ".pdf");
+            pdf.save(Files.newOutputStream(tempFile, StandardOpenOption.WRITE));
             pdf.close();
+            Files.move(tempFile, file.getLocation(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Throwable th) {
             throw new PdfCreationException(th);
         }
