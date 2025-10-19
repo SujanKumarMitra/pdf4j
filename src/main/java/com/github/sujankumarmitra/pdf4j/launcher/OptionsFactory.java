@@ -21,7 +21,7 @@ public class OptionsFactory {
                 .numberOfArgs(2)
                 .argName("sourcePath destinationPath")
                 .desc("Convert an image to PDF")
-                .build();
+                .get();
     }
 
     private static Option getMergeOption() {
@@ -30,7 +30,7 @@ public class OptionsFactory {
                 .numberOfArgs(1)
                 .argName("destinationPath filePaths...")
                 .desc("Merge PDFs into a single PDF")
-                .build();
+                .get();
     }
 
     private static Option getConvertAndMergeImageOption() {
@@ -39,7 +39,7 @@ public class OptionsFactory {
                .desc("Convert images to PDF and merge them")
                .argName("destinationPath filePaths...")
                .numberOfArgs(1)
-               .build();
+               .get();
 
     }
 
@@ -49,6 +49,6 @@ public class OptionsFactory {
                 .desc("Reverse the order of page in PDF")
                 .numberOfArgs(1)
                 .argName("sourcePath")
-                .build();
+                .get();
     }
 }
